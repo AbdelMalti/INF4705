@@ -6,20 +6,13 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.channels.FileChannel;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 
 public class Quicksort {
-	
-	private FileInputStream fis;
-	private BufferedInputStream bis;
-	private FileChannel fc;
 	private long time;
-	private int[] size = {1000, 5000, 10000, 50000, 100000, 500000};
-	private int[][] serieTest = {{0,1,2,3,4,5,6,7,8,9}, 
-									{10,11,12,13,14,15,16,17,18,19}, 
-									{20,21,22,23,24,25,26,27,28,29}};
+	private int[] size = { 1000, 5000, 10000, 50000, 100000, 500000 };
+	private int[][] serieTest = { {0,1,2,3,4,5,6,7,8,9}, {10,11,12,13,14,15,16,17,18,19}, {20,21,22,23,24,25,26,27,28,29} };
 	private float totalTime;
 
 	public Quicksort(){
@@ -64,28 +57,23 @@ public class Quicksort {
 	private void readFromFile(String file, int sizeOfFile){
 		try{
 			//Lire du fichier
-		      /******/
-		      Scanner scanner = new Scanner(new File(file));
+			
+		      Scanner scanner = new Scanner(new File("INF4705/INF4705_H17_TP1_donnees/"+file));
 		      int [] tall = new int [sizeOfFile];
 		      int i = 0;
+		      
 		      while(scanner.hasNextInt()){
-		         tall[i++] = scanner.nextInt();
-		         System.out.println("Num : "+tall[i]);
+		    	  
+		    	  String inputFile = scanner.next();
+		    	  int tempInt = Integer.parseInt(inputFile);
+		    	  
+		    	  tall[i++] = tempInt;
+		    	  //System.out.println(""+tall[i-1]);
 		      }
-		      /******/
-		     /* 
-		      //On crée un buffer correspondant à la taille du fichier
-		      ByteBuffer bBuff = ByteBuffer.allocate(size);
-					
-		      //Démarrage de la lecture
-		      fc.read(bBuff);
-		      //On prépare à la lecture avec l'appel à flip
-		      bBuff.flip();*/
+		      scanner.close();
 		      
 		} catch (FileNotFoundException e) {
 		      e.printStackTrace();
-	    } catch (IOException e) {
-	      e.printStackTrace();
 	    }
 	}
 	
