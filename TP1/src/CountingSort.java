@@ -26,41 +26,47 @@ public class CountingSort {
         //return b;
     }
 
-	public void countingSort(ArrayList a, int k) {//k est la valeur la plus grande dans a[]
+	public void countingSort(ArrayList a, ArrayList b, ArrayList c, int k) {//k est la valeur la plus grande dans a[]
 		System.out.println("a");
-		ArrayList c = new ArrayList(k);
-		for (int i = 0; i < k; i++) { c.add(0); }
+		
 		System.out.println("b");
-		for (int i = 0; i < a.size(); i++) { c.set((Integer) a.get(i), ((Integer)c.get(i))+1 );}
+		for (int i = 0; i < a.size(); i++) //47189931
+		{ 
+			if((Integer) a.get(i) > Integer.MAX_VALUE)
+				System.err.println("outof : "+a.get(i));
+			if(null == c.get((Integer) a.get(i)))
+			{
+				c.set((Integer) a.get(i), 0);
+			}
+			int num = (Integer)c.get((Integer) a.get(i)) + 1 ;
+			c.set((Integer) a.get(i), num);
+		}
 		System.out.println("c");
 		
-		/*for (int i = 1; i < k; i++)
-		{ 
-			int n = c.get(i) + c.get(i-1);
-			c.set(i, n);//( ((Integer) c.get(i))  + (Integer) c.get(i-1) )) ; 
-		}*/
-		
-		int avant = 0;
-		int sum = 0;
-		int compt = 0 ;
+		int avant = 0, sum = 0, compt = 0;
 		for(Object i : c)
 		{
 			if(i != c.get(0))
 			{
 				sum = (Integer)i + avant;
+				if((Integer) sum >= Integer.MAX_VALUE)
+					System.err.println("outof : "+sum);
 				c.set(compt, sum);
 			}
-			avant = (Integer)i;
+			avant = (null == i)? 0: (Integer)i;
 			sum = 0;
 			++compt;
 		}
 		
 		System.out.println("d");
-		ArrayList<Integer> b = new ArrayList();
-		for (int i = 0; i < a.size(); i++) { b.add(0); }
+		
 		System.out.println("e");
 		for (int i = a.size() -1 ; i >= 0; i--)
-			b.set( (Integer) c.get( (Integer) a.get(i) -1 ), (Integer) a.get(i));
+		{
+			//b.set( (Integer) c.get( (Integer) a.get(i) -1 ), (Integer) a.get(i));
+			c.set((Integer) a.get(i), (Integer) c.get((Integer) a.get(i)) - 1);
+		}
+		
 		System.out.println("f");
 		b = null;
         c = null;
